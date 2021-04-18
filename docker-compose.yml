@@ -1,0 +1,40 @@
+version: "3.4"
+
+services:
+  chatserver:
+    image: chatserver
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - ".:/go/src/app"
+    ports:
+      - 6969:6969
+  mysql:
+    image: mysql:8.0.23
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_ROOT_PASSWORD: "123456"
+    volumes:
+      - "./runtime/mysql/data:/var/lib/mysql"
+      - "./server/mysql/conf:/etc/mysql/conf.d"
+  redis:
+    image: redis:5.0.9
+    ports:
+      - "6379:6379"
+    environment:
+      - LANG=en_US.UTF-8
+    volumes:
+      - "./runtime/redis/data:/data"
+  mongo:
+    image: mongo
+    volumes:
+      - "./runtime/mongo/data:/data/db"
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123456
+    tty: true
