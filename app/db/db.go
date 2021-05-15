@@ -7,7 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func init() {
+func Init() {
 	fmt.Println("init start ...")
 }
 
